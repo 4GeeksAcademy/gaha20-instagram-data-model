@@ -25,6 +25,7 @@ class Post(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     user: Mapped["User"] = relationship(back_populates="post")
     comment: Mapped[List["Comment"]] = relationship(back_populates="post")
+    media: Mapped[List["Media"]] = relationship(back_populates="post")
 
     def to_dict(self):
         return {}
@@ -43,7 +44,13 @@ class Follower(Base):
     user_from_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
     user_to_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
 
-class Media
+class Media(Base):
+    __tablename__ = 'media'
+    id : Mapped[int] = mapped_column(primary_key=True)
+    media_type = Column(String(250), nullable=False)
+    url = Column(String(250), unique=True, nullable=False)
+    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
+
 
 
 
